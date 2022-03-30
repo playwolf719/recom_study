@@ -112,6 +112,67 @@ def Popularity(train, test, N):
 
 
 
+## 用户行为数据分析
+------------------------
+
+
+### 用户活跃度和物品流行度的分布
+
+> 横坐标是用户的活跃度 K ，纵坐标是活跃度为 K 的用户总数。这里，用户的活跃度为用户产生过行为的物品总数。
+
+![image](https://user-images.githubusercontent.com/6240382/160795074-8b8b1f60-5d80-4ad9-8e8a-2ec65dc112ad.png)
+
+```python
+
+
+item_popularity = movieLen_df.groupby(["userID"],as_index = False).count()
+item_popularity.rename(mapper = {"movieID" : "user_act"},axis = 1,inplace = True)
+item_popularity = item_popularity.groupby(["user_act"],as_index = False).count()
+item_popularity.rename(mapper = {"userID" : "user_act_degree"},axis = 1,inplace = True)
+item_popularity["log_user_act"] = np.log10(item_popularity.user_act)
+
+sns.set_style("whitegrid")
+
+sns.jointplot(data = item_popularity,x = "log_user_act",y = "user_act_degree")
+plt.title("")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
