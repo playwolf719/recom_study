@@ -49,8 +49,8 @@ def PrecisionRecall(test, N):
     hit = 0
     n_recall = 0
     n_precision = 0
-    # test为user为key，items为val的字典，items为测试集上的推荐列表或set
-    # rank代表，训练集上的针对当前user长度为N的推荐列表或set
+    # test为user为key，items为val的字典，items为推荐列表或set
+    # rank代表，针对当前user的长度为N的推荐列表或set
     for user, items in test.items():
         rank = Recommend(user, N)
         hit += len(rank & items)
@@ -62,6 +62,53 @@ def PrecisionRecall(test, N):
 
 > 有的时候，为了全面评测 TopN 推荐的准确率和召回率，一般会选取不同的推荐列表长度 N ，计算出一组准确率 / 召回率，然后画出准确率 / 召回率曲线（ precision/recall curve ） 。
 
+
+##### 覆盖率
+> 覆盖率（ coverage ）描述一个推荐系统对物品长尾的发掘能力。覆盖率有不同的定义方法，最简单的定义为推荐系统能够推荐出来的物品占总物品集合的比例。假设系统的用户集合为 U ，推荐系统给每个用户推荐一个长度为 N 的物品列表 R(u) 。那么推荐系统的覆盖率可以通过下面的公式计算：![image](https://user-images.githubusercontent.com/6240382/160765109-c03bc040-3f53-4a39-859a-ecd9ce165cf5.png)
+
+```python
+
+def coverage(recommends, all_items):
+    """
+        计算覆盖率
+        @param recommends : dict形式 { userID : Items }
+        @param all_items :  所有的items，为list或set类型
+    """
+    recommend_items = set()
+    for _, items in recommends.items():
+        for item in items:
+            recommend_items.add(item)
+    return len(recommend_items) / len(all_items)
+
+```
+
+##### 平均热门程度（平均流行度）
+> 至于推荐结果的新颖性，我们简单地用推荐结果的平均热门程度（ AveragePopularity ）度量。对于物品 i ，定义它的流行度 item_pop(i) 为给这个物品打过标签的用户数。而对推荐系统，我
+们定义它的平均热门度如下：![image](https://user-images.githubusercontent.com/6240382/160767485-cc65662f-2935-4f62-9f38-dda0c12892bf.png)
+
+
+```python
+
+
+def Popularity(train, test, N):
+    # 物品流行度
+    item_popularity = dict()
+    for user, items in train.items():
+        for item in items.keys()
+            if item not in item_popularity:
+                item_popularity[item] = 0
+            item_popularity[item] += 1
+    ret = 0
+    n = 0
+    for user in train.keys():
+        rank = GetRecommendation(user, N)
+        for item, pui in rank:
+            ret += math.log(1 + item_popularity[item])
+            n += 1
+    ret /= n * 1.0
+    return ret
+
+```
 
 
 
