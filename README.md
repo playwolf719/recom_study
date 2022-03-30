@@ -49,7 +49,7 @@ def PrecisionRecall(test, N):
     hit = 0
     n_recall = 0
     n_precision = 0
-    # test为user为key，items为val，items为测试集上的推荐列表或set
+    # test为user为key，items为val的字典，items为测试集上的推荐列表或set
     # rank代表，训练集上的针对当前user长度为N的推荐列表或set
     for user, items in test.items():
         rank = Recommend(user, N)
@@ -58,8 +58,9 @@ def PrecisionRecall(test, N):
         n_precision += N
     return [hit / (1.0 * n_recall), hit / (1.0 * n_precision)]
 
-
 ```
+
+> 有的时候，为了全面评测 TopN 推荐的准确率和召回率，一般会选取不同的推荐列表长度 N ，计算出一组准确率 / 召回率，然后画出准确率 / 召回率曲线（ precision/recall curve ） 。
 
 
 
