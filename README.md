@@ -118,7 +118,7 @@ def Popularity(train, test, N):
 
 ### 用户活跃度和物品流行度的分布
 
-> 横坐标是用户的活跃度 K ，纵坐标是活跃度为 K 的用户总数。这里，用户的活跃度为用户产生过行为的物品总数。
+> 横坐标是用户的活跃度 K ，纵坐标是活跃度为 K 的用户总数的log10值。（取对数，是为了更清晰看出分布）这里，用户的活跃度为用户产生过行为的物品总数。
 
 ![image](https://user-images.githubusercontent.com/6240382/160795074-8b8b1f60-5d80-4ad9-8e8a-2ec65dc112ad.png)
 
@@ -137,6 +137,9 @@ sns.jointplot(data = item_popularity,x = "log_user_act",y = "user_act_degree")
 plt.title("")
 
 ```
+
+
+
 
 
 
